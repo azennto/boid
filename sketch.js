@@ -1,4 +1,20 @@
 const s = (p) => {
+	class Flock {
+		constructor(){
+			this.boids = [];
+		}
+
+		run() {
+			for (const v of this.boids){
+				v.run(this.boids);
+			}
+		}
+
+		addBoid(b) {
+			this.boids.push(b);
+		}
+	}
+
 	class Boid {
 		constructor(x,y,color) {
 			this.acceleration = p.createVector(0,0);
