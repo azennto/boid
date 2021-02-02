@@ -38,6 +38,30 @@ const s = (p) => {
 			return steer;
 		}
 
+		align(boids) {
+			let neighbordist = 50.0;
+			let sum = p.createVector(0.0);
+			let count = 0;
+			for(const v of boids){
+				let d = p5.Vector.dist(this.position,v.position);
+				if(0 < d && d < neighbordist){
+					sum.add(v.velocity);
+					count++;
+				}
+			}
+			if(count > 0){
+				sum.div(count);
+				sum.normalize();
+				sum.setMag(this.maxspeed);
+
+				let steer = p5.Vector.sub(sum,this.velocity);
+				steer.limit(this.maxforce);
+				return steer;
+			}else{
+				return p.createVector(0,0);
+			}
+		}
+
 	}
 };
 
