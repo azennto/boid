@@ -10,6 +10,39 @@ const s = (p) => {
 			this.color = color;
 		}
 
+		run(boids) {
+			this.flock(boids);
+			this.update();
+			this.border();
+			this.render();
+		}
+
+		update(){
+			this.velocity.add(this.acceleration);
+			this.velocity.limit(this.maxspeed);
+
+			this.position.add(this.velocity);
+			this.acceleration.mult(0);
+		}
+
+		border() {
+			if (this.position.x < -this.r)  this.position.x = p.width + this.r;
+			if (this.position.y < -this.r)  this.position.y = p.height + this.r;
+			if (this.position.x > p.width + this.r) this.position.x = -this.r;
+			if (this.position.y > p.height + this.r) this.position.y = -this.r;
+		}
+
+		render(){
+			let theta = this.velocity.heading() + p.radians(90);
+			p.fill(this.color);
+			p.noStroke();
+			p.push();
+			//p.translate(this.position.p.x,this.position.p.y);
+			//p.rotate(theta);
+			p.ellipse(this.position.x,this.position.y,this.r);
+			p.pop();
+		}
+
 		applyforce(force) {
 			this.acceleration.add(force);
 		}
