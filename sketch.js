@@ -10,6 +10,24 @@ const s = (p) => {
 			this.color = color;
 		}
 
+		applyforce(force) {
+			this.acceleration.add(force);
+		}
+
+		flock(boids) {
+			let sep = this.separate(boids);
+			let ali = this.align(boids);
+			let coh = this.cohesion(boids);
+
+			sep.mult(1.5);
+			ali.mult(1.0);
+			coh.mult(1.0);
+
+			this.applyforce(sep);
+			this.applyforce(ali);
+			this.applyforce(coh);
+		}
+
 		seek(target) {
 			let desired = p5.Vector.sub(target,this.position);
 			desired.normalize();
