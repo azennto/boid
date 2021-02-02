@@ -10,6 +10,17 @@ const s = (p) => {
 			this.color = color;
 		}
 
+		seek(target) {
+			let desired = p5.Vector.sub(target,this.position);
+			desired.normalize();
+			desired.mult(this.maxspeed);
+
+			let steer = p5.Vector.sub(desired,this.velocity);
+			steer.limit(this.maxforce);
+
+			return steer;
+		}
+
 		separate(boids) {
 			let separate_paration = 25.0;
 			let steer = p.createVector(0.0);
@@ -62,6 +73,24 @@ const s = (p) => {
 			}
 		}
 
+		cohesion(boids) {
+			let neighbordist = 25.0;
+			let sum = p.createVector(0.0);
+			let count = 0;
+			for(const v of boids){
+				let d = p5.Vector.dist(this.position,v.position);
+				if(0 < d && d < neighbordist){
+					sum.add(v.position);
+					count++;
+				}
+			}
+			if(count > 0){
+				sum.div(count);
+				return this.seek(sum);
+			}else{
+				return p.createVector(0,0);
+			}
+		}
 	}
 };
 
