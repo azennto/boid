@@ -94,8 +94,8 @@ const s = (p) => {
 			let ali = this.align(boids);
 			let coh = this.cohesion(boids);
 
-			sep.mult(1.5);
-			ali.mult(1.0);
+			sep.mult(5.0);
+			ali.mult(3.0);
 			coh.mult(1.0);
 
 			this.applyforce(sep);
@@ -115,7 +115,7 @@ const s = (p) => {
 		}
 
 		separate(boids) {
-			let separate_paration = 25.0;
+			let separate_paration = 50.0;
 			let steer = p.createVector(0.0);
 			let count = 0;
 			for(const v of boids){
@@ -143,7 +143,7 @@ const s = (p) => {
 		}
 
 		align(boids) {
-			let neighbordist = 50.0;
+			let neighbordist = 150.0;
 			let sum = p.createVector(0.0);
 			let count = 0;
 			for(const v of boids){
@@ -167,7 +167,7 @@ const s = (p) => {
 		}
 
 		cohesion(boids) {
-			let neighbordist = 25.0;
+			let neighbordist = 140.0;
 			let sum = p.createVector(0.0);
 			let count = 0;
 			for(const v of boids){
