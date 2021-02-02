@@ -10,6 +10,34 @@ const s = (p) => {
 			this.color = color;
 		}
 
+		separate(boids) {
+			let separate_paration = 25.0;
+			let steer = p.createVector(0.0);
+			let count = 0;
+			for(const v of boids){
+				let d = p5.Vector.dist(this.position,v.position);
+				if(0 < d && d < separate_paration){
+					let diff = p5.Vector.sub(v.velocity);
+					diff.normalize();
+					diff.div(d);
+					steer.add(diff);
+					count++;
+				}
+			}
+
+			if(count > 0){
+				steer.div(count);
+			}
+
+			if(steer.mag() > 0){
+				steer.normalize();
+				steer.mult(this.maxspeed);
+				steer.sub(this.velocity);
+				steer.limit(this.maxforce);
+			}
+			return steer;
+		}
+
 	}
 };
 
